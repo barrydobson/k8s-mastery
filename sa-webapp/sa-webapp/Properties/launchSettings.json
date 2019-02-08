@@ -14,7 +14,8 @@
       "launchBrowser": true,
       "launchUrl": "api/sentiment",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "SA_LOGIC_URL": "http://localhost:5050"
       }
     },
     "sa_webapp": {
