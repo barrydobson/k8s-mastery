@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/sa-webapp/bin/Debug/netcoreapp2.2/sa-webapp.dll",
+            "program": "${workspaceFolder}/sa-webapp/sa-webapp/bin/Debug/netcoreapp2.2/sa-webapp.dll",
             "args": [],
             "cwd": "${workspaceFolder}/sa-webapp",
             "stopAtEntry": false,
@@ -30,7 +30,8 @@
                 }
             },
             "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "SA_LOGIC_URL": "http://localhost:5050"
             },
             "sourceFileMap": {
                 "/Views": "${workspaceFolder}/Views"
