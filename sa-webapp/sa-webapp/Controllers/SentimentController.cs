@@ -1,6 +1,6 @@
-﻿using System.Net.Http;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 
 namespace sa_webapp.Controllers
 {
@@ -16,11 +16,12 @@ namespace sa_webapp.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] string value)
+        public async Task<ActionResult> Post([FromBody] SentenceModel value)
         {
             var client = _httpClientFactory.CreateClient("sa-logic");
-            var result = await client.GetStringAsync("/analyse/sentiment");
-            return Ok(result);
+            var result = await client.PostAsJsonAsync("/analyse/sentiment", value);
+            var sentiment = await result.Content.ReadAsAsync<SentimentModel>();
+            return Ok(sentiment);
         }
     }
 }
