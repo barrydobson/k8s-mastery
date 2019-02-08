@@ -6,11 +6,11 @@ namespace sa_webapp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class SentimentController : ControllerBase
     {
         private readonly IHttpClientFactory _httpClientFactory;
 
-        public ValuesController(IHttpClientFactory httpClientFactory)
+        public SentimentController(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
         }
