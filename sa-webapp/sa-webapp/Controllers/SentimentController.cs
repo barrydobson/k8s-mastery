@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace sa_webapp.Controllers
 {
@@ -19,7 +22,18 @@ namespace sa_webapp.Controllers
         public async Task<ActionResult> Post([FromBody] SentenceModel value)
         {
             var client = _httpClientFactory.CreateClient("sa-logic");
-            var result = await client.PostAsJsonAsync("/analyse/sentiment", value);
+
+            var settings = new JsonSerializerSettings
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
+            };
+            var camelCaseLoad = JsonConvert.SerializeObject(value, settings);
+            var content = new StringContent(camelCaseLoad, Encoding.UTF8, "application/json");
+
+            var result = await client.PostAsync("/analyse/sentiment", content);
+
+            if (!result.IsSuccessStatusCode) return BadRequest(value);
+
             var sentiment = await result.Content.ReadAsAsync<SentimentModel>();
             return Ok(sentiment);
         }
