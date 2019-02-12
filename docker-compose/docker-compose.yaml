@@ -1,10 +1,14 @@
 version: "3"
 services:
   sa-logic:
+    build:
+      context: ../sa-logic
     image: barrydobson/sa-logic
     ports:
       - "5050:5000"
   sa-webapp:
+    build:
+      context: ../sa-webapp
     image: barrydobson/sa-webapp
     ports:
       - "5051:80"
@@ -13,6 +17,8 @@ services:
     depends_on:
       - sa-logic
   sa-frontend:
+    build:
+      context: ../sa-frontend
     image: barrydobson/sa-frontend
     ports:
       - "5052:80"
