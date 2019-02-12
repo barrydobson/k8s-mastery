@@ -28,8 +28,7 @@ namespace sa_webapp
                         builder
                             .AllowAnyOrigin()
                             .AllowAnyHeader()
-                            .AllowAnyMethod()
-                            .AllowCredentials();
+                            .AllowAnyMethod();
                     });
 
             });
