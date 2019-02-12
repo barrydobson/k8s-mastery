@@ -10,3 +10,11 @@ services:
       - "5051:80"
     environment:
       SA_LOGIC_URL: http://sa-logic:5000
+    depends_on:
+      - sa-logic
+  sa-frontend:
+    image: barrydobson/sa-frontend
+    ports:
+      - "5052:80"
+    depends_on:
+      - sa-webapp
