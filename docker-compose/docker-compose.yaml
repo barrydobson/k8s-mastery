@@ -1,0 +1,12 @@
+version: "3"
+services:
+  sa-logic:
+    image: barrydobson/sa-logic
+    ports:
+      - "5050:5000"
+  sa-webapp:
+    image: barrydobson/sa-webapp
+    ports:
+      - "5051:80"
+    environment:
+      SA_LOGIC_URL: http://sa-logic:5000
