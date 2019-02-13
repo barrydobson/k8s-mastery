@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - image: barrydobson/sa-logic
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           name: sa-logic
           ports:
             - containerPort: 5000

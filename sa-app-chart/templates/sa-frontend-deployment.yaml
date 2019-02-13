@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - image: barrydobson/sa-frontend
-          imagePullPolicy: IfNotPresent 
+          imagePullPolicy: Always 
           name: sa-frontend
           ports:
             - containerPort: 80

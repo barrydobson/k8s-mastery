@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - image: barrydobson/sa-webapp
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         name: sa-webapp
         env:
           - name: SA_LOGIC_URL
