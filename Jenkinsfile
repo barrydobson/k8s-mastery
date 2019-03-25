@@ -1,7 +1,16 @@
 node("docker") {
-    checkout scm
+    stage 'Checkout'
+        checkout scm
 
-    def customImage = docker.build("barrydobson/sa-frontend:${env.BUILD_ID}", "./sa-frontend")
-    customImage.push()
-    customImage.push('latest')
+    stage 'Build'
+        def customImage = docker.build("barrydobson/sa-frontend:${env.BUILD_ID}", "./sa-frontend")
+    
+    stage 'Push'
+        docker.withRegistry( '', 'dockerhub-bd' ) {
+            customImage.push()
+            customImage.push('latest')
+        }
+
+    stage 'Clean up'
+        sh "docker rmi barrydobson/sa-frontend:${env.BUILD_ID}"
 }
