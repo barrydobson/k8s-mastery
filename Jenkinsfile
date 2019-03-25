@@ -1,11 +1,16 @@
 node("docker") {
     
+    def commitHash
+    def frontEndImage
+    def webAppImage
+    def logicImage
+
     stage('Checkout') {
-        def commitHash = checkout(scm).GIT_COMMIT[0..7]
+        commitHash = checkout(scm).GIT_COMMIT[0..7]
     }
 
     stage('Build Front End') {
-        def frontEndImage = docker.build("barrydobson/sa-frontend:${commitHash}", "./sa-frontend")
+        frontEndImage = docker.build("barrydobson/sa-frontend:${commitHash}", "./sa-frontend")
     }
 
     stage('Push Front End') {
@@ -16,7 +21,7 @@ node("docker") {
     }
 
     stage('Build API') {
-        def webAppImage = docker.build("barrydobson/sa-webapp:${commitHash}", "./sa-webapp")
+        webAppImage = docker.build("barrydobson/sa-webapp:${commitHash}", "./sa-webapp")
     }
 
     stage('Push API') {
@@ -27,7 +32,7 @@ node("docker") {
     }
 
     stage('Build Logic API') {
-        def logicImage = docker.build("barrydobson/sa-logic:${commitHash}", "./sa-logic")
+        logicImage = docker.build("barrydobson/sa-logic:${commitHash}", "./sa-logic")
     }
 
     stage('Push Logic API') {
