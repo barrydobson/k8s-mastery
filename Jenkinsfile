@@ -1,9 +1,9 @@
 node("docker") {
     stage 'Checkout'
-        checkout scm
+        def commitHash = checkout(scm).GIT_COMMIT[0..7]
 
     stage 'Build Front End'
-        def frontEndImage = docker.build("barrydobson/sa-frontend:${env.GIT_COMMIT[0..7]}", "./sa-frontend")
+        def frontEndImage = docker.build("barrydobson/sa-frontend:${commitHash}", "./sa-frontend")
 
     stage 'Push Front End'
         docker.withRegistry( '', 'dockerhub-bd' ) {
@@ -12,7 +12,7 @@ node("docker") {
         }
 
     stage 'Build API'
-        def webAppImage = docker.build("barrydobson/sa-webapp:${env.GIT_COMMIT[0..7]}", "./sa-webapp")
+        def webAppImage = docker.build("barrydobson/sa-webapp:${commitHash}", "./sa-webapp")
 
     stage 'Push API'
         docker.withRegistry( '', 'dockerhub-bd' ) {
@@ -21,7 +21,7 @@ node("docker") {
         }
 
     stage 'Build Logic API'
-        def logicImage = docker.build("barrydobson/sa-logic:${env.GIT_COMMIT[0..7]}", "./sa-logic")
+        def logicImage = docker.build("barrydobson/sa-logic:${commitHash}", "./sa-logic")
 
     stage 'Push Logic API'
          docker.withRegistry( '', 'dockerhub-bd' ) {
@@ -30,7 +30,7 @@ node("docker") {
         }
 
     stage 'Clean up'
-        sh "docker rmi barrydobson/sa-frontend:${env.GIT_COMMIT[0..7]}"
-        sh "docker rmi barrydobson/sa-webapp:${env.GIT_COMMIT[0..7]}"
-        sh "docker rmi barrydobson/sa-logic:${env.GIT_COMMIT[0..7]}"
+        sh "docker rmi barrydobson/sa-frontend:${commitHash}"
+        sh "docker rmi barrydobson/sa-webapp:${commitHash}"
+        sh "docker rmi barrydobson/sa-logic:${commitHash}"
 }
