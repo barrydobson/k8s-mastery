@@ -3,7 +3,7 @@ node("docker") {
         checkout scm
 
     stage 'Build Front End'
-        def frontEndImage = docker.build("barrydobson/sa-frontend:${GIT_REVISION:0:7}", "./sa-frontend")
+        def frontEndImage = docker.build("barrydobson/sa-frontend:${GIT_REVISION[0..7]}", "./sa-frontend")
 
     stage 'Push Front End'
         docker.withRegistry( '', 'dockerhub-bd' ) {
@@ -12,7 +12,7 @@ node("docker") {
         }
 
     stage 'Build API'
-        def webAppImage = docker.build("barrydobson/sa-webapp:${GIT_REVISION:0:7}", "./sa-webapp")
+        def webAppImage = docker.build("barrydobson/sa-webapp:${GIT_REVISION[0..7]}", "./sa-webapp")
 
     stage 'Push API'
         docker.withRegistry( '', 'dockerhub-bd' ) {
@@ -21,7 +21,7 @@ node("docker") {
         }
 
     stage 'Build Logic API'
-        def logicImage = docker.build("barrydobson/sa-logic:${GIT_REVISION:0:7}", "./sa-logic")
+        def logicImage = docker.build("barrydobson/sa-logic:${GIT_REVISION[0..7]}", "./sa-logic")
 
     stage 'Push Logic API'
          docker.withRegistry( '', 'dockerhub-bd' ) {
@@ -30,7 +30,7 @@ node("docker") {
         }
 
     stage 'Clean up'
-        sh "docker rmi barrydobson/sa-frontend:${GIT_REVISION:0:7}"
-        sh "docker rmi barrydobson/sa-webapp:${GIT_REVISION:0:7}"
-        sh "docker rmi barrydobson/sa-logic:${GIT_REVISION:0:7}"
+        sh "docker rmi barrydobson/sa-frontend:${GIT_REVISION[0..7]}"
+        sh "docker rmi barrydobson/sa-webapp:${GIT_REVISION[0..7]}"
+        sh "docker rmi barrydobson/sa-logic:${GIT_REVISION[0..7]}"
 }
