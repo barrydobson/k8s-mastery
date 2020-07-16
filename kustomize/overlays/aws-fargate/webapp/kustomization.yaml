@@ -3,7 +3,6 @@ kind: Kustomization
 namespace: default
 resources:
 - ../../../base/webapp
-- alb-ingress.yaml
 patchesStrategicMerge:
 - |
   apiVersion: v1

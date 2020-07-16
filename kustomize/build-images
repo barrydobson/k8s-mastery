@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-docker build -t barrydobson/sa-frontend:aws --build-arg WEB_APP_URL=http://localhost:5051 ../sa-frontend
-docker build -t barrydobson/sa-webapp-java:aws ../sa-webapp-java
-docker build -t barrydobson/sa-logic:aws ../sa-logic
+docker build -t barrydobson/sa-frontend:"$1" --build-arg WEB_APP_URL=$2 ../sa-frontend
+docker build -t barrydobson/sa-webapp-java:"$1" ../sa-webapp-java
+docker build -t barrydobson/sa-logic:"$1" ../sa-logic
 
-docker push barrydobson/sa-frontend:aws
-docker push barrydobson/sa-webapp-java:aws
-docker push barrydobson/sa-logic:aws
+docker push barrydobson/sa-frontend:"$1"
+docker push barrydobson/sa-webapp-java:"$1"
+docker push barrydobson/sa-logic:"$1"

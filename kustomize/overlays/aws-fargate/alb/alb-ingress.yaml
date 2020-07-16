@@ -1,7 +1,8 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: frontend-ingress
+  name: sa-ingress
+  namespace: default
   annotations:
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
@@ -10,7 +11,12 @@ spec:
   rules:
   - http:
       paths:
+      - path: /sentiment
+        backend:
+          serviceName: sa-webapp-lb
+          servicePort: 5051
       - path: /*
         backend:
           serviceName: sa-frontend-lb
           servicePort: 80
+

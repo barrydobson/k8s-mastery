@@ -3,7 +3,6 @@ kind: Kustomization
 namespace: default
 resources:
 - ../../../base/frontend
-- alb-ingress.yaml
 patchesStrategicMerge:
 - |
   apiVersion: v1
@@ -14,4 +13,4 @@ patchesStrategicMerge:
     type: NodePort
 images:
   - name: barrydobson/sa-frontend
-    newTag: aws-alb-1
+    newTag: aws-alb-2
