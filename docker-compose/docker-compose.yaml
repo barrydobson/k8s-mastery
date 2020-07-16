@@ -3,23 +3,25 @@ services:
   sa-logic:
     build:
       context: ../sa-logic
-    image: barrydobson/sa-logic
+    image: barrydobson/sa-logic:local
     ports:
       - "5050:5000"
   sa-webapp:
     build:
-      context: ../sa-webapp
-    image: barrydobson/sa-webapp
+      context: ../sa-webapp-java
+    image: barrydobson/sa-webapp-java:local
     ports:
-      - "5051:80"
+      - "5051:8080"
     environment:
-      SA_LOGIC_URL: http://sa-logic:5000
+      - SA_LOGIC_API_URL=http://sa-logic:5000
     depends_on:
       - sa-logic
   sa-frontend:
     build:
       context: ../sa-frontend
-    image: barrydobson/sa-frontend
+      args:
+        WEB_APP_URL: http://localhost:5051
+    image: barrydobson/sa-frontend:local
     ports:
       - "5052:80"
     depends_on:

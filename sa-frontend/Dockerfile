@@ -1,11 +1,12 @@
-FROM node:7.10 as build-deps
-WORKDIR /usr/src/app
-COPY package.json yarn.lock ./
-RUN yarn
-COPY . ./
-RUN yarn build
+FROM node:alpine as builder
+WORKDIR /sa-frontend
+COPY package.json .
+RUN npm install
+COPY . .
+ARG WEB_APP_URL=http://localhost:5051
+ENV WEB_APP_URL=$WEB_APP_URL
+RUN npm run build
 
-FROM nginx:1.12-alpine
-COPY --from=build-deps /usr/src/app/build /usr/share/nginx/html
+FROM nginx:1.15-alpine
+COPY --from=builder /sa-frontend/build /usr/share/nginx/html
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
